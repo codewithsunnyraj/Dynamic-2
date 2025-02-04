@@ -59,13 +59,13 @@ export const loginUser = async (req, res) => {
         .json({ success: false, message: "Invalid Credientials" });
     }
     const token = createToken(user._id);
-    
-     // Set the token as a cookie
-     res.cookie('authToken', token, {
-        httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
-        secure: false, // Set to true if using HTTPS
-        maxAge: 60 * 60 * 1000, // 1 hour in milliseconds
-      });
+
+    // Set the token as a cookie
+    res.cookie("authToken", token, {
+      httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+      secure: false, // Set to true if using HTTPS
+      maxAge: 60 * 60 * 1000, // 1 hour in milliseconds
+    });
 
     res
       .status(200)
@@ -76,7 +76,18 @@ export const loginUser = async (req, res) => {
   }
 };
 
-
-export const userLogout = async(req,res)=>{
-    
-}
+export const userLogout = async (req, res) => {
+  try {
+    res.clearCookie("authToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "None",
+    });
+    res.status(200).json({ message: "Logout Successfully", success: true});
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error while logging Out" });
+  }
+};
