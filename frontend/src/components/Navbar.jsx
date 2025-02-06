@@ -3,6 +3,7 @@ import Hero from "./Hero";
 import { IoMdCall, IoMdMailUnread } from "react-icons/io";
 import { assets } from "../constent/assets";
 import { CiSearch } from "react-icons/ci";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className="md:px-36 py-4 md:py-12 px-10">
@@ -31,8 +32,12 @@ const Navbar = () => {
               <li>Home</li>
               <li>About</li>
               <li>Blog</li>
-              <li>Contact</li>
-              <li>Services</li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
             </ul>
           </div>
           <div>
@@ -41,7 +46,9 @@ const Navbar = () => {
                 <CiSearch size={30} className="font-extrabold" />
               </div>
               <div>
-                <button className="bg-blue-700 font-weather text-white py-3 px-4 rounded-md">Get In Touch</button>
+                <button className="bg-blue-700 font-weather text-white py-3 px-4 rounded-md">
+                  Get In Touch
+                </button>
               </div>
             </div>
           </div>

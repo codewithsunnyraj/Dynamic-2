@@ -1,16 +1,18 @@
 import React from "react";
-import { assets } from "./constent/assets";
 import Navbar from "./components/Navbar";
-import About from "./components/About"
 import Hero from "./components/Hero";
+import { Route, Router, Routes } from "react-router-dom";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
 const App = () => {
   return (
     <div className="w-full">
-      <div className="relative bg-herobg md:pb-40 bg-cover">
-        <Navbar />
-        <Hero/>
-      </div>
-      <About/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </div>
   );
 };
