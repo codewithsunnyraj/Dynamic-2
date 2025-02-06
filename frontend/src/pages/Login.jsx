@@ -1,14 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 const Login = () => {
+  const baseUrl = useSelector((state) => state.globalSunny.baseUrl);
+  useEffect(() => {
+    console.log(baseUrl);
+  }, [baseUrl]);
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    console.log("login data", data);
+    try {
+      const response = await axios.post(`${baseUrl}/login`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const { token } = response.data;
+      console.log(token);
+    } catch (error) {
+      console.log(error);
+      toast.error("Error occur while login");
+    }
   };
   return (
     <div className="w-full flex justify-center items-center bg-black h-screen ">

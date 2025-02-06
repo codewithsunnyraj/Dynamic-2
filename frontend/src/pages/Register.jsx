@@ -1,15 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux"; //useSelector hook ka use karke global URL fetch karoge.
 const Register = () => {
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const onSubmit = (event) => {
+  const baseUrl = useSelector((state) => state.globalSunny.baseUrl); //Global URL access karo
+  useEffect(() => {
+    console.log(baseUrl); // Ab yaha safe hai
+  }, [baseUrl]); // Dependency array me baseUrl daalo
+
+  const onSubmit = async (event) => {
     event.preventDefault();
-    console.log(data);
+    try {
+      const response = await axios.post(`${baseUrl}/register`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      toast.success("Register Successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error while registering");
+    }
   };
   return (
     <div>
