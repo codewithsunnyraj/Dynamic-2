@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "../Redux/globalReducer";
+import Dashboard from "../../../Admin/src/pages/Dashboard";
 const Login = () => {
   const baseUrl = useSelector((state) => state.globalSunny.baseUrl);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     console.log(baseUrl);
   }, [baseUrl]);
@@ -21,7 +26,11 @@ const Login = () => {
         },
       });
       const { token } = response.data;
+      dispatch(setToken(token)); //save token globally
+      localStorage.setItem("authToken", token);
       console.log(token);
+      toast.success("User Login Successfully");
+      navigate("/admin");
     } catch (error) {
       console.log(error);
       toast.error("Error occur while login");
